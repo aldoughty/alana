@@ -1,0 +1,50 @@
+#include <vector>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+void PrintAllPermutations(vector<string> &permList, vector<string> &nameList) {
+   vector<string> tmpVec; 
+   bool first = true;
+   
+    if (nameList.size() == 0) {
+    for (size_t i = 0; i < permList.size(); i++){
+            if (!first) {cout << ", ";};
+            first = false;
+            cout << permList.at(i);
+        }
+        cout << endl;
+    }
+
+    else {
+        for (size_t i = 0; i < nameList.size(); i++){
+            tmpVec = nameList;
+
+            permList.push_back(tmpVec[i]);
+            tmpVec.erase(tmpVec.begin() + i);
+
+            PrintAllPermutations(permList, tmpVec);
+
+            permList.pop_back();
+        }
+    }
+
+}
+
+int main() {
+   vector<string> nameList;
+   vector<string> permList;
+   string name;
+
+   cin >> name;
+    
+   while (name != "-1") {
+       nameList.push_back(name);
+       cin >> name;
+    } 
+
+    PrintAllPermutations(permList, nameList);
+   
+   return 0;
+}
