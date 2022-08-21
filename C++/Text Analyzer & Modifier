@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+//Returns the number of characters in usrStr
+int GetNumOfCharacters(const string usrStr) {
+   
+   int length = usrStr.length();
+   return length;
+}
+
+string OutputWithoutWhitespace(string usrStr) {
+   unsigned int i;  // Loop index
+   
+   for (i = 0; i < usrStr.size(); ++i) {
+      if (usrStr.at(i) == ' ') {
+         usrStr.erase(i, 1);
+      }
+   }
+   for (i = 0; i < usrStr.size(); ++i) {
+      if (usrStr.at(i) == '\t') {
+         usrStr.erase(i, 1);
+      }
+   }
+   return usrStr;
+}
+
+int main() {
+
+   string phrase;
+   
+   cout << "Enter a sentence or phrase:" << endl << endl;
+   getline(cin, phrase);
+   cout << "You entered: " << phrase << endl << endl;
+   cout << "Number of characters: " << GetNumOfCharacters(phrase) << endl;
+   cout << "String with no whitespace: " << OutputWithoutWhitespace(phrase) << endl;
+
+   return 0;
+}
