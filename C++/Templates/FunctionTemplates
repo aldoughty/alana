@@ -1,3 +1,11 @@
+/*
+CheckOrder() checks if four items are in ascending, neither, or descending order. 
+The function returns -1 if the items are in ascending order, 0 if the items are unordered, and 1 if the items are in descending order.
+
+The program reads four items from input and outputs if the items are ordered. The items can be different types, including integers, strings, 
+characters, or doubles.
+*/
+
 #include <string>
 #include <iostream>
 #include <vector>
