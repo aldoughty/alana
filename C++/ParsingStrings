@@ -1,0 +1,63 @@
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+static string outputWords(void)
+{
+   istringstream inSS;
+   vector<string> words;
+   string word;
+   string lineString;
+   string firstWord;
+   string secondWord;
+
+   char delim = ',';
+   string result;
+   
+   cout << "Enter input string:" << endl;
+       
+   getline(cin, lineString);
+      
+   inSS.clear();
+   inSS.str(lineString);
+      
+   if (lineString == "q") { result = "quit"; }
+      
+   else if (lineString.find_first_of(delim) == std::string::npos) 
+      { cout << "Error: No comma in string." << endl << endl; result = "noComma";}
+   
+   else {
+      
+      while(getline(inSS, word, ',')) {
+         
+         word.erase(remove_if(word.begin(), word.end(), ::isspace), word.end());
+         words.push_back(word);
+         
+      }
+         
+         cout << "First word: " << words[0] << endl;
+         cout << "Second word: " << words[1] << endl;
+         cout << endl;
+   }
+
+      return result;
+}
+
+int main() {
+   
+   string result;
+   
+   while (result != "quit")
+   {
+      result = outputWords();
+
+      if(result == "noComma")
+         { result = outputWords(); }
+
+   }
+      return 0;
+   
+}
