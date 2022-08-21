@@ -1,0 +1,56 @@
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int BinarySearchCount(vector<int>vecX, int query);
+
+int main() {
+
+   int numElements, element{}, numQueries, query{};
+   string tempElements;
+   vector<int> elements, queries;
+   int i = 0;
+   
+   cin >>  numElements;
+   
+   cin.ignore(numeric_limits<streamsize>::max(), '\n');
+   getline(cin, tempElements, '\n');
+   
+   stringstream streamElements(tempElements);
+   while (streamElements >> element) elements.push_back(element);
+   
+   sort(elements.begin(), elements.end());
+   
+   cin >> numQueries;
+
+   while (i < numQueries) {
+      cin >> query;
+      queries.push_back(query);
+      i++;
+   } 
+   
+   for(int i = 0; i < numQueries; i++){
+      cout << BinarySearchCount(elements, queries.at(i)) << endl;
+   }
+
+
+   return 0;
+}
+
+int BinarySearchCount(vector<int>vecX, int query) {
+    int low = 0, high = vecX.size() - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            int v = vecX[mid];  
+            if (query < v) {
+                high = mid - 1;
+            } else if (query > v) {
+                low = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        return ((query == vecX[low]) ? low - 1: low);
+}
