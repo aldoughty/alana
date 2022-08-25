@@ -1,0 +1,126 @@
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.*;
+
+public class LabProgram {
+   
+   public static void main(String[] args) {
+      Scanner scnr = new Scanner(System.in);
+      int diceValues[] = new int[5];
+      int highScore = 0;
+       
+      // Fill array with five values from input
+      for(int i=0; i<diceValues.length; ++i) {
+         diceValues[i] = scnr.nextInt();
+      }
+      
+      // Place values in ascending order
+      Arrays.sort(diceValues);
+      
+      // Find high score and output
+      highScore = findHighScore(diceValues);
+      System.out.println("High score: " + highScore);
+   }
+
+   // Find high score
+   public static int findHighScore(int dice[]) {
+      int val = 0;
+      int max = 0;
+      
+      for (int i = 0; i < dice.length; i++) { 
+         int tmp1 = checkSingles(dice, i);
+            if (tmp1 > val) { val = tmp1; }
+         int tmp2 = checkThreeOfKind(dice);
+         int tmp3 = checkFourOfKind(dice);
+         int tmp4 = checkFiveOfKind(dice);
+         int tmp5 = checkFullHouse(dice);
+         int tmp6 = checkStraight(dice);
+         
+         max = tmp1;
+
+         if (tmp2 > max)
+            max = tmp2;
+         if (tmp3 > max)
+            max = tmp3;
+         if (tmp4 > max)
+            max = tmp4;
+         if (tmp5 > max)
+            max = tmp5;
+         if (tmp6 > max)
+            max = tmp6;
+      }
+      return max; 
+   }
+   
+   // Add all occurences of goal value
+   public static int checkSingles(int dice[], int goal) {
+      int sum = 0;
+      
+      for (int i = 0; i < dice.length; i++) {
+         if (dice[i] == goal) {
+            sum += dice[i];
+         }   
+      }
+      
+      return sum;
+   }
+   
+   // Check for three of a kind (score = 30)    
+   public static int checkThreeOfKind(int dice[]) {
+      
+      if(dice[0]==dice[2] || dice[2]==dice[4]) { return 30; }
+
+      return -1;  
+   }
+   
+   // Check for four of a kind (score = 40)    
+   public static int checkFourOfKind(int dice[]) {
+      
+      if(dice[0]==dice[3]) { return 40; }
+
+      return -1;  
+   }   
+   
+   // Check for five of a kind (score = 50)    
+   public static int checkFiveOfKind(int dice[]) {
+      
+      if(dice[0]==dice[4]) { return 50; }
+      
+      return -1;  
+   }        
+   
+   // Check for full house (score = 35)
+   public static int checkFullHouse(int dice[]) { 
+      
+      if((dice[0]==dice[1] && dice[2]==dice[4]) || (dice[0]==dice[2] && dice[3]==dice[4])) { return 35; }
+      
+      return -1; 
+   } 
+   
+   // Check for straight (score = 45)    
+   public static int checkStraight(int dice[]) {
+      
+      HashSet<Integer> S = new HashSet<Integer>();
+      for (int i = 0; i < dice.length; i++)
+        S.add(dice[i]);
+      
+      int ans = 0;
+      for (int i = 0; i < dice.length; i++) {
+ 
+        if (S.contains(dice[i])) {
+ 
+            int j = dice[i];
+ 
+            while (S.contains(j))
+                j++;
+                
+            ans = Math.max(ans, j - dice[i]);
+         }
+         
+      if(ans == 5) { return 45; }
+         
+      }
+
+      return -1;  
+   }   
+}
