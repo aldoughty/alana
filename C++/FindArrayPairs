@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+
+void CreateArray(int array[], int size);
+int Partition(int array[], int left, int right);
+void Quicksort(int array[], int left, int right);
+bool FindArrayPairs(int arrayOne[], int arrayTwo[], int arrayOneSize, int arrayTwoSize);
+
+int main() {
+
+   int numIter, arrayOneSize, arrayTwoSize;
+
+   scanf("%d", &numIter);
+   
+   for(int x = 0; x < numIter; x++) {
+      
+      scanf("%d %d", &arrayOneSize, &arrayTwoSize);
+      while(getchar() != '\n');
+      
+      int arrayOne[arrayOneSize];
+      CreateArray(arrayOne, arrayOneSize);
+      
+      int arrayTwo[arrayTwoSize];
+      CreateArray(arrayTwo, arrayTwoSize);
+ 
+      if(!FindArrayPairs(arrayOne, arrayTwo, arrayOneSize, arrayTwoSize))
+         { cout << "NO" << endl; }
+      else { cout << "YES" << endl; }
+   
+   }
+   
+   return 0;
+}
+
+void CreateArray(int array[], int size) {
+   int i = 0;
+   
+   do {
+        scanf("%d", &array[i++]);
+      } while (getchar() != '\n' && i < size);
+      Quicksort(array, 0, size - 1);
+   
+}
+
+int Partition(int array[], int left, int right) {
+    int pivotIndex = left + (right - left) / 2;
+    int pivotValue = array[pivotIndex];
+    int i = left, j = right;
+    int temp;
+    while(i <= j) {
+        while(array[i] < pivotValue) {
+            i++;
+        }
+        while(array[j] > pivotValue) {
+            j--;
+        }
+        if(i <= j) {
+            temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+            i++;
+            j--;
+        }
+    }
+    return i;
+}
+void Quicksort(int array[], int left, int right) {
+    if(left < right) {
+        int pivotIndex = Partition(array, left, right);
+        Quicksort(array, left, pivotIndex - 1);
+        Quicksort(array, pivotIndex, right);
+    }
+}
+bool FindArrayPairs(int arrayOne[], int arrayTwo[], int arrayOneSize, int arrayTwoSize) {
+   int z = 0;
+   for (int x = 0; x < arrayOneSize; x++) {
+      for (int y = 0; y < arrayTwoSize; y++) {
+         if(arrayOne[x] > arrayTwo[z] ){
+            z++;
+            break;
+         } 
+         else { return false; }
+      }
+   }
+   return true;
+}
